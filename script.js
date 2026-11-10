@@ -1,324 +1,231 @@
 
 document.addEventListener("DOMContentLoaded", () => {
-  gsap.registerPlugin(ScrollTrigger);
 
-  const video = document.querySelector("#vslVideo");
-  const soundButton = document.querySelector("#soundButton");
-  const soundIcon = document.querySelector("#soundIcon");
-  const videoProgressFill = document.querySelector("#videoProgressFill");
+    const phone = document.querySelector("#phone");
+    const phoneNotice = document.querySelector("#phoneNotice");
 
-  const introScene = document.querySelector("#introScene");
-  const transitionStage = document.querySelector("#transitionStage");
-  const videoScreen = document.querySelector("#videoScreen");
-  const offerCard = document.querySelector("#offerCard");
-  const guaranteeCard = document.querySelector("#guaranteeCard");
+    const mainVideoOverlay = document.querySelector("#mainVideoOverlay");
+    const mainVideoContainer = document.querySelector("#mainVideoContainer");
+    const mainVslVideo = document.querySelector("#mainVslVideo");
 
-  // CONTROLE DO ESTADO DO ÁUDIO.
-  let audioEnabled = false;
+    const soundButton = document.querySelector("#soundButton");
+    const soundOffIcon = document.querySelector("#soundOffIcon");
+    const soundOnIcon = document.querySelector("#soundOnIcon");
 
-  // CONTROLE DA TRANSIÇÃO DO VÍDEO.
-  let videoTransitionProgress = 0;
-  let videoShouldPlay = true;
+    const videoProgressFill = document.querySelector("#videoProgressFill");
 
-  // ========================================
-  // VÍDEO: AUTOPLAY E PROGRESSO
-  // ========================================
 
-  if (video) {
-    video.muted = true;
-    video.volume = 1;
+    // ANIMAÇÃO INICIAL DO CELULAR
 
-    // Impede que a barra fique escondida no início.
-    if (videoScreen) {
-      videoScreen.classList.add("is-fully-open");
+    if (phone) {
+
+        phone.addEventListener("animationend", () => {
+            phone.classList.add("phone-ready");
+        }, { once: true });
+
     }
 
-    const playVideo = () => {
-      const playPromise = video.play();
 
-      if (playPromise !== undefined) {
-        playPromise.catch(() => {
-          // O navegador pode bloquear o autoplay.
-          // O vídeo poderá ser iniciado posteriormente.
-        });
-      }
-    };
+    // ATUALIZAR ÍCONE DO SOM
 
-    playVideo();
+    function updateSoundButton() {
 
-    // ATUALIZA A BARRA DE PROGRESSO.
-    const updateVideoProgress = () => {
-      if (
-        !videoProgressFill ||
-        !video.duration ||
-        !Number.isFinite(video.duration)
-      ) {
-        return;
-      }
+        if (mainVslVideo.muted) {
 
-      const percentage =
-        (video.currentTime / video.duration) * 100;
+            soundOffIcon.hidden = false;
+            soundOnIcon.hidden = true;
 
-      videoProgressFill.style.width = `${percentage}%`;
-    };
+            soundButton.setAttribute("aria-label", "Ativar som");
 
-    video.addEventListener("timeupdate", updateVideoProgress);
+        } else {
 
-    video.addEventListener("loadedmetadata", updateVideoProgress);
+            soundOffIcon.hidden = true;
+            soundOnIcon.hidden = false;
 
-    video.addEventListener("ended", updateVideoProgress);
-  }
+            soundButton.setAttribute("aria-label", "Desativar som");
+
+        }
+
+    }
 
 
-  // ========================================
-  // CONTROLE DE SOM
-  // ========================================
+    // ABRIR VÍDEO
 
-  if (soundButton && video) {
-    soundButton.classList.add("is-muted");
+    async function openMainVideo() {
+
+        mainVideoOverlay.classList.add("active");
+
+        document.body.style.overflow = "hidden";
+
+        mainVslVideo.pause();
+        mainVslVideo.currentTime = 0;
+        mainVslVideo.muted = false;
+
+        videoProgressFill.style.width = "0%";
+
+        updateSoundButton();
+
+        // Tentar abrir em tela cheia
+
+        try {
+
+            if (mainVideoOverlay.requestFullscreen) {
+
+                await mainVideoOverlay.requestFullscreen();
+
+            }
+
+        } catch (error) {
+
+            console.log("Tela cheia não disponível. Usando tela cheia visual.");
+
+        }
+
+
+        // Tentar deixar o celular na horizontal
+
+        try {
+
+            if (
+                screen.orientation &&
+                screen.orientation.lock &&
+                document.fullscreenElement
+            ) {
+
+                await screen.orientation.lock("landscape");
+
+            }
+
+        } catch (error) {
+
+            console.log("O navegador não permite bloquear a orientação horizontal.");
+
+        }
+
+
+        // Reproduzir vídeo
+
+        try {
+
+            await mainVslVideo.play();
+
+        } catch (error) {
+
+            console.log("Não foi possível iniciar o vídeo automaticamente.");
+
+        }
+
+    }
+
+
+    phoneNotice.addEventListener("click", openMainVideo);
+
+
+    // BOTÃO DE SOM
 
     soundButton.addEventListener("click", () => {
-      audioEnabled = !audioEnabled;
 
-      // O som só é liberado se a pessoa ativar.
-      video.muted = !audioEnabled;
+        mainVslVideo.muted = !mainVslVideo.muted;
 
-      // Mantém o volume sincronizado com a rolagem.
-      video.volume = audioEnabled
-        ? Math.max(0, 1 - videoTransitionProgress)
-        : 1;
+        updateSoundButton();
 
-      soundButton.classList.toggle(
-        "is-muted",
-        !audioEnabled
-      );
-
-      if (soundIcon) {
-        soundIcon.textContent = "";
-      }
-
-      soundButton.setAttribute(
-        "aria-label",
-        audioEnabled ? "Desativar som" : "Ativar som"
-      );
     });
-  }
 
 
-  // ========================================
-  // ABERTURA, VÍDEO E TRANSIÇÃO
-  // ========================================
+    // BARRA DE PROGRESSO - SOMENTE VISUALIZAÇÃO
 
-  const openingTimeline = gsap.timeline({
-    scrollTrigger: {
-      trigger: introScene,
-      start: "top top",
-      end: () => `+=${window.innerHeight * 1.45}`,
-      scrub: 1,
-      pin: true,
-      pinSpacing: true,
-      anticipatePin: 1,
-      invalidateOnRefresh: true
-    }
-  });
+    mainVslVideo.addEventListener("timeupdate", () => {
 
-  openingTimeline
+        if (!mainVslVideo.duration) return;
 
-    // FECHAMENTO CIRCULAR DO VÍDEO.
-    .to(videoScreen, {
-      clipPath: "circle(0% at 50% 50%)",
-      ease: "none",
-      duration: 1
-    }, 0)
+        const percentage =
+            (mainVslVideo.currentTime / mainVslVideo.duration) * 100;
 
-    // APARECIMENTO DO CARD DE INVESTIMENTO.
-    .to(offerCard, {
-      opacity: 1,
-      y: 0,
-      ease: "power2.out",
-      duration: 0.38
-    }, 0.48)
+        videoProgressFill.style.width = percentage + "%";
 
-    // APARECIMENTO DO CARD DE GARANTIA.
-    .to(guaranteeCard, {
-      opacity: 1,
-      y: 0,
-      ease: "power2.out",
-      duration: 0.3
-    }, 0.72)
-
-    // TRANSIÇÃO GRADUAL DO FUNDO.
-    .to(transitionStage, {
-      backgroundColor: "#260F19",
-      ease: "none",
-      duration: 0.30
-    }, 0.72);
+    });
 
 
-  // ========================================
-  // SINCRONIZA ÁUDIO COM A TRANSIÇÃO
-  // ========================================
+    // IMPEDIR MENU DE CONTEXTO NO VÍDEO
 
-  const syncVideoWithScroll = () => {
-    if (!video || !videoScreen) return;
+    mainVslVideo.addEventListener("contextmenu", (event) => {
 
-    // A animação circular tem duração de 1 segundo.
-    videoTransitionProgress = gsap.utils.clamp(
-      0,
-      1,
-      openingTimeline.time()
-    );
+        event.preventDefault();
 
-    // VOLUME DIMINUI CONFORME O CÍRCULO FECHA.
-    if (audioEnabled) {
-      video.volume = 1 - videoTransitionProgress;
-    } else {
-      video.volume = 1;
-    }
-
-    // A BARRA SÓ APARECE COM O VÍDEO TOTALMENTE ABERTO.
-    videoScreen.classList.toggle(
-      "is-fully-open",
-      videoTransitionProgress <= 0.001
-    );
-
-    // QUANDO O VÍDEO DESAPARECE, O ÁUDIO PARA TAMBÉM.
-    if (videoTransitionProgress >= 0.999) {
-
-      if (!video.paused) {
-        video.pause();
-      }
-
-      videoShouldPlay = false;
-
-    } else {
-
-      // AO VOLTAR PARA CIMA, O VÍDEO PODE REAPARECER.
-      if (!videoShouldPlay && !video.ended) {
-        video.play().catch(() => {});
-        videoShouldPlay = true;
-      }
-    }
-  };
-
-  // ACOMPANHA O PLAYHEAD REAL DA ANIMAÇÃO GSAP.
-  openingTimeline.eventCallback(
-    "onUpdate",
-    syncVideoWithScroll
-  );
-
-  // ESTADO INICIAL.
-  syncVideoWithScroll();
+    });
 
 
-  // ========================================
-  // ANIMAÇÕES SUAVES DOS ELEMENTOS
-  // ========================================
+    // BLOQUEAR TECLAS DE AVANÇO E RETROCESSO
 
-  gsap.utils.toArray(".reveal").forEach((element) => {
-    gsap.fromTo(
-      element,
-      {
-        opacity: 0,
-        y: 35
-      },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.9,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: element,
-          start: "top 88%",
-          once: true
+    document.addEventListener("keydown", (event) => {
+
+        if (!mainVideoOverlay.classList.contains("active")) return;
+
+        if (
+            event.code === "Space" ||
+            event.code === "ArrowRight" ||
+            event.code === "ArrowLeft" ||
+            event.code === "ArrowUp" ||
+            event.code === "ArrowDown" ||
+            event.key.toLowerCase() === "k"
+        ) {
+
+            event.preventDefault();
+
         }
-      }
-    );
-  });
 
-
-  // ========================================
-  // MOVIMENTO HORIZONTAL DO MÉTODO
-  // EM TELAS GRANDES
-  // ========================================
-
-  const media = gsap.matchMedia();
-
-  media.add("(min-width: 901px)", () => {
-    const track = document.querySelector("#methodTrack");
-    const section = document.querySelector("#metodo");
-
-    if (!track || !section) return;
-
-    const getDistance = () => {
-      return Math.max(
-        0,
-        track.scrollWidth - window.innerWidth
-      );
-    };
-
-    gsap.to(track, {
-      x: () => -getDistance(),
-      ease: "none",
-      scrollTrigger: {
-        trigger: section,
-        start: "top top",
-        end: () => `+=${getDistance()}`,
-        pin: true,
-        scrub: 1,
-        anticipatePin: 1,
-        invalidateOnRefresh: true
-      }
     });
-  });
 
 
-  // ========================================
-  // FAIXA DO MÉTODO: MOVIMENTO CONTÍNUO
-  // ========================================
+    // QUANDO O VÍDEO TERMINAR
 
-  const floatingTrack = document.querySelector(
-    ".floating-phrase-track"
-  );
+    mainVslVideo.addEventListener("ended", async () => {
 
-  const floatingGroups = document.querySelectorAll(
-    ".floating-phrase-group"
-  );
+        mainVslVideo.pause();
 
-  if (floatingTrack && floatingGroups.length >= 2) {
-    const firstGroup = floatingGroups[0];
+        mainVideoOverlay.classList.remove("active");
 
-    gsap.to(floatingTrack, {
-      x: () => -firstGroup.offsetWidth,
-      duration: 25,
-      ease: "none",
-      repeat: -1,
-      repeatRefresh: true
+        document.body.style.overflow = "";
+
+        // Liberar a orientação normal do aparelho
+
+        try {
+
+            if (screen.orientation && screen.orientation.unlock) {
+                screen.orientation.unlock();
+            }
+
+        } catch (error) {
+
+            console.log("Não foi necessário desbloquear a orientação.");
+
+        }
+
+
+        // Sair da tela cheia
+
+        try {
+
+            if (document.fullscreenElement) {
+                await document.exitFullscreen();
+            }
+
+        } catch (error) {
+
+            console.log("A tela cheia já foi encerrada.");
+
+        }
+
+
+        // FUTURAMENTE:
+        // Aqui vamos conectar a próxima página HTML
+        // que terá os cards de valores.
+
     });
-  }
 
 
-  // ========================================
-  // ATUALIZA CÁLCULOS DEPOIS DO CARREGAMENTO
-  // ========================================
+    // SE O VÍDEO FOR REINICIADO
 
-  window.addEventListener("load", () => {
-    ScrollTrigger.refresh();
-  });
-
-
-  // ========================================
-  // RECALCULA AO REDIMENSIONAR A TELA
-  // ========================================
-
-  let resizeTimeout;
-
-  window.addEventListener("resize", () => {
-    clearTimeout(resizeTimeout);
-
-    resizeTimeout = setTimeout(() => {
-      ScrollTrigger.refresh();
-    }, 250);
-  });
+    mainVslVideo.addEventListener("play", updateSoundButton);
 
 });
