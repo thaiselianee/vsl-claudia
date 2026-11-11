@@ -1,212 +1,230 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <meta name="theme-color" content="#19090e">
 
     <title>Método de Blindagem Emocional</title>
 
     <link rel="stylesheet" href="style.css">
+
+    <!-- Bibliotecas 3D e animações -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+                "gsap": "https://cdn.jsdelivr.net/npm/gsap@3.12.5/index.js",
+                "gsap/ScrollTrigger": "https://cdn.jsdelivr.net/npm/gsap@3.12.5/ScrollTrigger.js"
+            }
+        }
+    </script>
 </head>
 
 <body>
 
-    <main class="hero">
+    <!-- EXPERIÊNCIA 3D -->
 
-        <div class="ambient ambient-one"></div>
-        <div class="ambient ambient-two"></div>
+    <main>
 
-        <div class="hero-inner">
+        <section class="experience" id="experience">
 
-            <section class="hero-copy">
+            <!-- CENA 3D -->
+            <div class="scene-sticky">
 
-                <span class="eyebrow">
-                    <span class="eyebrow-line"></span>
-                    UMA NOVA JORNADA COMEÇA AQUI
-                </span>
+                <canvas id="threeCanvas"></canvas>
 
-                <h1>
-                    Descubra o Método
-                    <em>de Blindagem</em>
-                    <span class="gold-word">Emocional.</span>
-                </h1>
+                <div class="scene-vignette"></div>
 
-                <p class="hero-description">
-                    Um caminho de reconhecimento, fortalecimento e
-                    reconstrução para você voltar a se escolher
-                    e escrever uma nova história.
-                </p>
-
-                <div class="copy-divider">
-                    <span></span>
-                    <i></i>
-                    <span></span>
+                <div class="scene-top">
+                    <span>MÉTODO DE BLINDAGEM EMOCIONAL</span>
+                    <span class="scene-number" id="sceneNumber">01 / 04</span>
                 </div>
 
-                <p class="supporting-copy">
-                    Sua transformação começa quando você decide
-                    olhar para si com mais clareza.
-                </p>
-
-            </section>
-
-            <section class="phone-area">
-
-                <div class="phone-glow"></div>
-
-                <div class="phone-stage">
-
-                    <div class="phone" id="phone">
-
-                        <div class="phone-side-button button-one"></div>
-                        <div class="phone-side-button button-two"></div>
-
-                        <div class="phone-frame">
-
-                            <div class="phone-screen">
-
-                                <div class="screen-status">
-                                    <span>9:41</span>
-                                    <span>● ▰</span>
-                                </div>
-
-                                <div class="screen-island"></div>
-
-                                <video
-                                    class="phone-demo-video"
-                                    id="phoneDemoVideo"
-                                    autoplay
-                                    muted
-                                    loop
-                                    playsinline
-                                    preload="metadata"
-                                >
-                                    <source src="doc/video/gravaçao2.mp4" type="video/mp4">
-                                </video>
-
-                                <button
-                                    class="phone-notice"
-                                    id="phoneNotice"
-                                    type="button"
-                                    aria-label="Clique para assistir à apresentação"
-                                >
-
-
-                                    <span class="notice-title">
-                                        Seu vídeo está sendo reproduzido
-                                    </span>
-
-                                    <span class="notice-play">
-                                        <svg viewBox="0 0 100 100" aria-hidden="true">
-                                            <circle cx="50" cy="50" r="43"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                stroke-width="3"/>
-
-                                            <path d="M40 29 L70 50 L40 71 Z"
-                                                fill="currentColor"/>
-                                        </svg>
-                                    </span>
-
-                                    <span class="notice-action">
-                                        TOQUE PARA ASSISTIR
-                                    </span>
-
-                                </button>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="phone-caption">
-                    <span class="caption-dot"></span>
-                    UMA EXPERIÊNCIA PARA VOCÊ
-                </div>
-
-            </section>
-
-        </div>
-
-        <div class="bottom-ornament">
-            <span></span>
-            <i>✧</i>
-            <span></span>
-        </div>
-
-        <div class="corner-label">
-            MÉTODO DE BLINDAGEM EMOCIONAL
-        </div>
-
-    </main>
-
-
-    <!-- VÍDEO PRINCIPAL -->
-
-    <div class="main-video-overlay" id="mainVideoOverlay">
-
-        <div class="main-video-container" id="mainVideoContainer">
-
-            <video
-                id="mainVslVideo"
-                class="main-vsl-video"
-                playsinline
-                preload="metadata"
-                disablepictureinpicture
-                controlslist="nodownload noplaybackrate noremoteplayback"
-            >
-                <source src="doc/video/vsl-demo1.mp4" type="video/mp4">
-            </video>
-
-            <!-- CONTROLES PERSONALIZADOS -->
-
-            <div class="custom-video-controls">
-
-                <button
-                    class="sound-button"
-                    id="soundButton"
-                    type="button"
-                    aria-label="Ativar som"
-                >
-                    <svg id="soundOffIcon" viewBox="0 0 24 24">
-                        <path d="M11 5 6 9H2v6h4l5 4V5Z"
-                            fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linejoin="round"/>
-                        <path d="m17 9 5 6m0-6-5 6"
-                            fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round"/>
-                    </svg>
-
-                    <svg id="soundOnIcon" viewBox="0 0 24 24" hidden>
-                        <path d="M11 5 6 9H2v6h4l5 4V5Z"
-                            fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linejoin="round"/>
-                        <path d="M15.5 8.5a5 5 0 0 1 0 7"
-                            fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round"/>
-                        <path d="M19 5a10 10 0 0 1 0 14"
-                            fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round"/>
-                    </svg>
-                </button>
-
-                <div class="video-progress-track">
-                    <div class="video-progress-fill" id="videoProgressFill"></div>
+                <div class="scene-bottom">
+                    <span>ROLE PARA DESCOBRIR</span>
+                    <span class="scroll-indicator">↓</span>
                 </div>
 
             </div>
 
-        </div>
 
-    </div>
+            <!-- TEXTOS QUE MUDAM COM A ROLAGEM -->
+
+            <div class="scroll-steps">
+
+                <article class="step step-one">
+                    <div class="step-content">
+                        <span class="step-kicker">UMA NOVA JORNADA COMEÇA AQUI</span>
+
+                        <h1>
+                            Descubra o Método
+                            <em>de Blindagem</em>
+                            <strong>Emocional.</strong>
+                        </h1>
+
+                        <p>
+                            Uma nova forma de reconhecer sua história,
+                            reconstruir sua força e voltar a escolher a si mesma.
+                        </p>
+
+                        <span class="step-hint">Continue rolando para começar</span>
+                    </div>
+                </article>
 
 
-    <script src="script.js"></script>
+                <article class="step step-two">
+                    <div class="step-content">
+                        <span class="step-kicker">ETAPA 01 — RECONHECIMENTO</span>
+
+                        <h2>
+                            Tudo começa quando você
+                            <em>enxerga o que precisa mudar.</em>
+                        </h2>
+
+                        <p>
+                            Reconhecer padrões é o primeiro passo para
+                            compreender sua história e recuperar sua clareza.
+                        </p>
+                    </div>
+                </article>
+
+
+                <article class="step step-three">
+                    <div class="step-content">
+                        <span class="step-kicker">ETAPA 02 — RECONSTRUÇÃO</span>
+
+                        <h2>
+                            É hora de reconstruir
+                            <em>aquilo que existe em você.</em>
+                        </h2>
+
+                        <p>
+                            Cada etapa representa um novo movimento:
+                            reconhecer, fortalecer e reconstruir.
+                        </p>
+                    </div>
+                </article>
+
+
+                <article class="step step-four">
+                    <div class="step-content">
+                        <span class="step-kicker">ETAPA 03 — BLINDAGEM</span>
+
+                        <h2>
+                            Uma nova estrutura.
+                            <em>Uma nova forma de se escolher.</em>
+                        </h2>
+
+                        <p>
+                            O Método de Blindagem Emocional propõe
+                            um caminho de fortalecimento e transformação.
+                        </p>
+
+                        <span class="step-hint">Continue para conhecer a apresentação</span>
+                    </div>
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- APRESENTAÇÃO EM VÍDEO -->
+
+        <section class="video-section" id="videoSection">
+
+            <div class="video-heading">
+                <span class="step-kicker">AGORA, CONHEÇA A PROPOSTA</span>
+
+                <h2>
+                    Sua próxima etapa
+                    <em>começa aqui.</em>
+                </h2>
+
+                <p>
+                    Assista à apresentação para conhecer o Método de Blindagem Emocional.
+                </p>
+            </div>
+
+
+            <div class="video-frame">
+
+                <video
+                    id="mainVideo"
+                    playsinline
+                    preload="metadata"
+                >
+                    <source src="assets/video/claudia-vsl.mp4" type="video/mp4">
+                </video>
+
+                <button class="video-start" id="videoStart">
+                    <span>▶</span>
+                    ASSISTIR À APRESENTAÇÃO
+                </button>
+
+                <div class="video-controls" id="videoControls">
+
+                    <button id="muteButton" aria-label="Ativar ou desativar áudio">
+                        <span id="muteIcon">◖</span>
+                    </button>
+
+                    <div class="progress-track">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+
+                    <span class="video-time" id="videoTime">00:00</span>
+
+                </div>
+
+            </div>
+
+            <p class="video-note" id="videoNote">
+                A apresentação precisa ser concluída para liberar a próxima etapa.
+            </p>
+
+        </section>
+
+
+        <!-- OFERTA: LIBERADA APÓS O VÍDEO -->
+
+        <section class="offer-section" id="offerSection">
+
+            <div class="offer-content">
+
+                <span class="step-kicker">SUA PRÓXIMA ETAPA</span>
+
+                <h2>
+                    Conheça o Método
+                    <em>de Blindagem Emocional.</em>
+                </h2>
+
+                <p>
+                    Aqui entraremos com a apresentação do método,
+                    os valores, os bônus e a garantia.
+                </p>
+
+                <div class="offer-placeholder">
+                    <span>ÁREA DE OFERTA</span>
+                    <h3>Cards de valores e bônus</h3>
+                    <p>Esta área será substituída pela página de valores.</p>
+                </div>
+
+                <a href="valores.html" class="offer-button">
+                    CONTINUAR
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script type="module" src="script.js"></script>
 
 </body>
 </html>

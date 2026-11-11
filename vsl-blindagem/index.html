@@ -1,0 +1,357 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#10070c">
+
+    <title>Mentoria de Blindagem Emocional</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Lato:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Lato:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <main class="experience" id="experience">
+
+        <div class="stage" id="stage">
+
+            <canvas id="scene"></canvas>
+
+            <div class="stage-vignette"></div>
+            <div class="stage-glow"></div>
+            <div class="cursor-glow" id="cursorGlow"></div>
+
+            <header class="top-header">
+                <div class="brand">BLINDAGEM <span>EMOCIONAL</span></div>
+                <div class="header-label">UMA NOVA HISTÓRIA COMEÇA AQUI</div>
+            </header>
+
+            <!-- TELA INICIAL -->
+
+      
+            <section class="scene intro-scene active" id="introScene">
+
+                <div class="intro-content">
+
+                    <h1>
+                        Descubra o Método de Blindagem
+                        <span class="title-emocional">Emocional.</span>
+                    </h1>
+
+                    <p class="intro-description">
+                        Existe um caminho para reconhecer o que aconteceu, reconstruir sua identidade e aprender a nunca mais aceitar aquilo que te machuca.
+                    </p>
+
+                    <div class="lead-card">
+
+                        <span class="lead-card-title">DÊ O PRIMEIRO PASSO</span>
+
+                        <p class="lead-card-description">
+                            Deixe seus dados para receber informações e novidades sobre a mentoria.
+                        </p>
+
+                        <form class="lead-form" id="leadForm">
+
+                            <input type="text" name="name" placeholder="Seu nome"
+                                aria-label="Seu nome" autocomplete="name" required>
+
+                            <input type="email" name="email" placeholder="Seu melhor e-mail"
+                                aria-label="Seu e-mail" autocomplete="email" required>
+
+                            <input type="tel" name="phone" placeholder="Seu telefone com DDD"
+                                aria-label="Seu telefone" autocomplete="tel" required>
+
+                            <button class="lead-submit" type="button">
+                                GARANTIR MINHA VAGA
+                            </button>
+
+                        </form>
+
+                        <small class="lead-privacy">
+                            Seus dados serão utilizados para contato e envio de informações.
+                        </small>
+
+                    </div>
+
+                </div>
+
+                <div class="video-area">
+
+                    <div class="video-heading">
+                        <h2>ASSISTA À APRESENTAÇÃO</h2>
+                    </div>
+
+                    <div class="video-frame" id="videoFrame">
+
+                        <video id="claudiaVideo" playsinline preload="metadata" muted>
+                            Seu navegador não suporta a reprodução de vídeo.
+                        </video>
+
+                        <button class="video-play-overlay" id="videoPlayButton" type="button">
+                            <span class="play-icon">▶</span>
+                            <span class="play-title">CLIQUE PARA ASSISTIR</span>
+                            <span class="play-subtitle">A apresentação será iniciada</span>
+                        </button>
+
+                        <button class="sound-button" id="soundButton" type="button" aria-label="Ativar som">
+                            <span id="soundIcon">◖</span>
+                            <span id="soundText">ATIVAR SOM</span>
+                        </button>
+
+                        <button class="video-expand-button" id="videoExpandButton"
+                            type="button" aria-label="Ampliar vídeo" title="Ampliar vídeo">
+                            <span id="expandIcon">⛶</span>
+                        </button>
+
+                        <button class="video-replay-button" id="videoReplayButton" type="button">
+                            <span>↻</span>
+                            ASSISTIR NOVAMENTE
+                        </button>
+
+                        <div class="video-ended-message" id="videoEndedMessage">
+                            <span>APRESENTAÇÃO CONCLUÍDA</span>
+                            <p>Agora você pode continuar.</p>
+                        </div>
+
+                    </div>
+
+                    <div class="video-status" id="videoStatus">
+                        <span class="status-dot"></span>
+                        <span id="videoStatusText">Clique no vídeo para começar</span>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- MÉTODO -->
+
+            <section class="scene content-scene method-scene" id="methodScene">
+
+                <div class="scene-heading">
+                    <span class="eyebrow">O CAMINHO DA TRANSFORMAÇÃO</span>
+                    <h2>O MÉTODO DE <span>BLINDAGEM</span></h2>
+                    <p>Cinco etapas para reconstruir sua relação consigo mesma.</p>
+                </div>
+
+                <div class="method-grid">
+
+                    <article class="method-card">
+                        <span class="card-number">01</span>
+                        <h3>Reconhecer</h3>
+                        <p>Identificar os padrões, compreender o que aconteceu e enxergar a realidade com clareza.</p>
+                    </article>
+
+                    <article class="method-card">
+                        <span class="card-number">02</span>
+                        <h3>Desromantizar</h3>
+                        <p>Deixar de idealizar aquilo que causou dor e enxergar a relação sem ilusões.</p>
+                    </article>
+
+                    <article class="method-card">
+                        <span class="card-number">03</span>
+                        <h3>Devolver</h3>
+                        <p>Deixar de carregar culpas, responsabilidades e pesos que não pertencem a você.</p>
+                    </article>
+
+                    <article class="method-card">
+                        <span class="card-number">04</span>
+                        <h3>Reconstruir</h3>
+                        <p>Resgatar sua identidade, sua força e a conexão com quem você realmente é.</p>
+                    </article>
+
+                    <article class="method-card">
+                        <span class="card-number">05</span>
+                        <h3>Blindar</h3>
+                        <p>Fortalecer seus limites e construir uma nova forma de se relacionar consigo mesma.</p>
+                    </article>
+
+                </div>
+
+            </section>
+
+
+            <!-- BÔNUS -->
+
+            <section class="scene content-scene bonuses-scene" id="bonusesScene">
+
+                <div class="scene-heading">
+                    <span class="eyebrow">MATERIAIS EXCLUSIVOS</span>
+                    <h2>UMA JORNADA AINDA <span>MAIS COMPLETA</span></h2>
+                    <p>Conteúdos complementares para acompanhar sua reconstrução.</p>
+                </div>
+
+                <div class="bonus-grid">
+
+                    <article class="bonus-card">
+                        <span class="bonus-number">BÔNUS 01</span>
+                        <h3>Desvinculação com o narcisista</h3>
+                        <p>Um conteúdo para compreender e trabalhar o processo de desvinculação.</p>
+                    </article>
+
+                    <article class="bonus-card">
+                        <span class="bonus-number">BÔNUS 02</span>
+                        <h3>Desgaste energético</h3>
+                        <p>Um olhar sobre o desgaste emocional e os impactos deixados pela relação.</p>
+                    </article>
+
+                    <article class="bonus-card">
+                        <span class="bonus-number">BÔNUS 03</span>
+                        <h3>Encerramento do vínculo</h3>
+                        <p>Um material para refletir sobre o encerramento desse ciclo.</p>
+                    </article>
+
+                    <article class="bonus-card">
+                        <span class="bonus-number">BÔNUS 04</span>
+                        <h3>Mulher restaurada</h3>
+                        <p>Um convite para resgatar sua identidade e reconhecer seu próprio valor.</p>
+                    </article>
+
+                    <article class="bonus-card">
+                        <span class="bonus-number">BÔNUS 05</span>
+                        <h3>Áudios de desprogramação e reprogramação</h3>
+                        <p>Áudios complementares para acompanhar sua jornada.</p>
+                    </article>
+
+                </div>
+
+            </section>
+
+
+            <!-- PERGUNTAS FREQUENTES -->
+
+            <section class="scene content-scene faq-scene" id="faqScene">
+
+                <div class="scene-heading">
+                    <span class="eyebrow">TIRE SUAS DÚVIDAS</span>
+                    <h2>PERGUNTAS <span>FREQUENTES</span></h2>
+                    <p>Algumas respostas importantes antes de começar.</p>
+                </div>
+
+                <div class="faq-list">
+
+                    <details class="faq-item">
+                        <summary>Como vou receber acesso ao método?</summary>
+                        <p>As informações de acesso serão disponibilizadas após a confirmação da inscrição.</p>
+                    </details>
+
+                    <details class="faq-item">
+                        <summary>Por quanto tempo terei acesso?</summary>
+                        <p>Consulte as condições de acesso apresentadas no momento da inscrição.</p>
+                    </details>
+
+                    <details class="faq-item">
+                        <summary>Preciso acompanhar tudo de uma vez?</summary>
+                        <p>Você poderá acompanhar os conteúdos conforme as orientações de acesso do método.</p>
+                    </details>
+
+                    <details class="faq-item">
+                        <summary>O método substitui acompanhamento profissional?</summary>
+                        <p>Não. O conteúdo é educativo e não substitui acompanhamento psicológico ou médico.</p>
+                    </details>
+
+                </div>
+
+            </section>
+
+
+            <!-- OFERTA -->
+
+            <section class="scene content-scene offer-scene" id="offerScene">
+
+                <div class="offer-content">
+
+                    <span class="eyebrow">SUA NOVA JORNADA COMEÇA AQUI</span>
+
+                    <h2>CHEGOU A HORA DE ESCOLHER <span>VOCÊ.</span></h2>
+
+                    <p>
+                        Você quer apenas sair desse relacionamento?
+                        Ou quer construir uma vida em que você nunca mais aceite viver algo parecido?
+                    </p>
+
+                    <p class="offer-emphasis">
+                        São duas coisas diferentes. Só uma delas liberta de verdade.
+                    </p>
+
+                    <div class="offer-card">
+
+                        <span class="offer-label">MÉTODO DE BLINDAGEM EMOCIONAL</span>
+
+                        <span class="offer-price-label">INVESTIMENTO</span>
+
+                        <strong class="offer-price">US$ 697,00</strong>
+
+                        <a class="offer-button" href="#" target="_blank">
+                            GARANTIR MINHA VAGA
+                        </a>
+
+                        <small>Acesso conforme as condições apresentadas na inscrição.</small>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- RODAPÉ -->
+
+            <section class="scene content-scene footer-scene" id="footerScene">
+
+                <div class="footer-content">
+
+                    <div class="footer-brand">BLINDAGEM <span>EMOCIONAL</span></div>
+
+                    <p>Uma nova história começa quando você escolhe se reconstruir.</p>
+
+                    <a class="footer-cta" href="#">
+                        GARANTIR MINHA VAGA
+                    </a>
+
+                    <div class="footer-line"></div>
+
+                    <small>© 2026 Blindagem Emocional. Todos os direitos reservados.</small>
+
+                </div>
+
+            </section>
+
+
+            <!-- NAVEGAÇÃO E PROGRESSO -->
+
+            <div class="bottom-progress" id="bottomProgress">
+
+                <span id="progressNumber">01</span>
+
+                <div class="progress-line">
+                    <div id="progressBar"></div>
+                </div>
+
+                <span id="progressTotal">06</span>
+
+            </div>
+
+            <div class="scroll-hint" id="scrollHint">
+                <span>ROLE PARA CONTINUAR</span>
+                <span class="hint-arrow">↓</span>
+            </div>
+
+        </div>
+
+    </main>
+
+    <div class="video-backdrop" id="videoBackdrop"></div>
+
+    <script type="module" src="/src/main.js"></script>
+
+</body>
+</html>
